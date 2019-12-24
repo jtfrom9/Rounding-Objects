@@ -420,6 +420,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b0aa4bb3f794f94bb40bd94634a178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minPos: -20
+  maxPos: 20
+  minDegree: -89.9
+  maxDegree: 89.9
+  minSpeed: 0.3
+  maxSpeed: 1.5
+  minScale: 1
+  maxScale: 2
+  numObjects: 50
 --- !u!4 &1088089144
 Transform:
   m_ObjectHideFlags: 0

@@ -6,41 +6,42 @@ public class Main : MonoBehaviour
 {
     SphereManager sphereManager;
 
+    public float minPos = -10.0f;
+    public float maxPos = 10.0f;
+    public float minDegree = -89.9f;
+    public float maxDegree = 89.9f;
+    public float minSpeed = 0.3f;
+    public float maxSpeed = 1.5f;
+    public float minScale = 1.0f;
+    public float maxScale = 3.0f;
+    public int numObjects = 10;
+
     void createSphereRandom()
     {
-        var pos = new Vector3(Random.Range(10, 100), Random.Range(10, 100), Random.Range(10, 100));
-        //var pos = new Vector3(Mathf.Sqrt(2), 1, 1);
-        //var axis = new Vector3(Random.Range(0.1f, 0.9f), Random.Range(0.1f, 0.9f), Random.Range(0.1f, 0.9f));
-        var axis = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1));
-        var speed = Random.Range(0.3f, 1.5f);
-        Debug.Log(pos.ToString() + ", " + axis.ToString() + ", " + speed);
-        sphereManager.CreateSphere(pos, axis, speed, Random.Range(1, 3));
+        var pos = new Vector3(Random.Range(minPos, maxPos), Random.Range(minPos, maxPos), Random.Range(minPos, maxPos));
+        var degree = Random.Range(minDegree, maxDegree);
+        var speed = Random.Range(minSpeed, maxSpeed);
+        var scale = Random.Range(minScale, maxScale);
+        sphereManager.CreateSphere(pos, degree, speed, scale);
     }
 
     void Start()
     {
         sphereManager = GameObject.Find("SphereManager").GetComponent<SphereManager>();
-        //sphereManager.CreateSphere(new Vector3(0, 0, 10), new Vector3(1, 1, 0), 1);
-        //sphereManager.CreateSphere(new Vector3(0, 0, 20), new Vector3(0, 1, 0), 0.8f);
-        //sphereManager.CreateSphere(new Vector3(0, 0, 10), new Vector3(1, 1, 0), 1, 1);
-        //sphereManager.CreateSphere(new Vector3(0, 0, 10), new Vector3(-1, 1, 0), 1, 1);
-        //sphereManager.CreateSphere(new Vector3(Mathf.Sqrt(200), 10, 10), new Vector3(-1, 1, 0), 1, 1);
-        //for (int i = 0; i < 500; i++)
-        //createSphereRandom();
-
-        //sphereManager.CreateSphere(new Vector3(0, 0, 5), new Vector3(0, 1, 0), 1, 1);
-        //sphereManager.CreateSphere(new Vector3(0, 0, 5), new Vector3(1, 1, 0), 1, 1);
-        //sphereManager.CreateSphere(new Vector3(5, 0, 0), new Vector3(0, 0, 1), 1, 1);
-        sphereManager.CreateSphere(new Vector3(5, 0, 5), new Vector3(0, 1, 0), 1, 1);
-        //sphereManager.CreateSphere(new Vector3(3, 0, 3), new Vector3(1, 1, 0), 1, 1);
-        sphereManager.CreateSphere(new Vector3(3, 0, 3), new Vector3(1, 0, -1), 1, 1);
-        for (float y = -100; y <= 100; y += 2)
+        for (int i = 0; i < numObjects; i++)
         {
-            sphereManager.CreateSphere(new Vector3(3, 0, 3), new Vector3(1, y, -1), 1, 1);
+            createSphereRandom();
         }
-    }
-
-    void Update()
-    {        
+        // sphereManager.CreateSphere(new Vector3(5, 0, 5), new Vector3(0, 1, 0), 1, 1);
+        // sphereManager.CreateSphere(new Vector3(3, 0, 3), new Vector3(1, 0, -1), 1, 1);
+        // for (float d = -89; d <= 90; d += 10)
+        // {
+        //     float y = Mathf.Tan(Mathf.PI * d / 180.0f);
+        //     sphereManager.CreateSphere(new Vector3(3, 0, 3), new Vector3(1, y, -1), 1, 1);
+        // }
+        // for (float d = -89; d <= 90; d += 10)
+        // {
+        //     sphereManager.CreateSphere(new Vector3(3, 0, 3), d, 1, 1);
+        // }
     }
 }
