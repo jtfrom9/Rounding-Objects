@@ -10,7 +10,11 @@ public class SphereController : MonoBehaviour
 
     private Material material;
     private bool visible = false;
+    private bool done = false;
     private float time;
+
+    public delegate void OnColorChangedHandler();
+    public event OnColorChangedHandler OnColorChanged;
 
     void Start()
     {
@@ -20,12 +24,14 @@ public class SphereController : MonoBehaviour
     void Update()
     {
         transform.RotateAround(Vector3.zero, axis, speed);
-        if (visible)
+        if (visible && !done)
         {
             time += Time.deltaTime;
-            if (time > 5.0)
+            if (time > 1.0)
             {
                 material.color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+                done = true;
+                OnColorChanged();
             }
         }
     }

@@ -7,6 +7,18 @@ public class SphereManager : MonoBehaviour
     [SerializeField]
     public GameObject prefab;
 
+    [SerializeField]
+    public UnityEngine.UI.Text UIText;
+
+    private int num = 0;
+
+    private void updateInfo()
+    {
+        if(UIText) {
+            UIText.text = "Yellow Balls: " + num;
+        }
+    }
+
     public void CreateSphere(Vector3 pos, Vector3 axis, float speed, float scale)
     {
         var go = Instantiate(prefab, pos, Quaternion.identity);
@@ -14,6 +26,13 @@ public class SphereManager : MonoBehaviour
         var ctrl = go.GetComponent<SphereController>();
         ctrl.axis = axis;
         ctrl.speed = speed;
+        ctrl.OnColorChanged += () =>
+        {
+            num--;
+            updateInfo();
+        };
+        num++;
+        updateInfo();
     }
 
     public void CreateSphere(Vector3 pos, float degree, float speed, float scale)
