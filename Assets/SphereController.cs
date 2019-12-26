@@ -16,6 +16,20 @@ public class SphereController : MonoBehaviour
     public delegate void OnColorChangedHandler();
     public event OnColorChangedHandler OnColorChanged;
 
+    public delegate bool TestHitHandler(Vector3 pos);
+    public event TestHitHandler TestHitCb;
+
+    public string Text {
+        get
+        {
+            return transform.Find("Text").gameObject.GetComponent<TextMesh>().text;
+        }
+        set
+        {
+            transform.Find("Text").gameObject.GetComponent<TextMesh>().text = value;
+        }
+    }
+
     void Start()
     {
         material = this.GetComponent<Renderer>().material;
@@ -24,6 +38,11 @@ public class SphereController : MonoBehaviour
     void Update()
     {
         transform.RotateAround(Vector3.zero, axis, speed);
+        if(TestHitCb(transform.position)) {
+            material.color = new Color(material.color.r, material.color.g, material.color.b, 1.0f);
+        } else {
+            material.color = new Color(material.color.r, material.color.g, material.color.b, 0.1f);
+        }
         if (visible && !done)
         {
             time += Time.deltaTime;
@@ -36,9 +55,22 @@ public class SphereController : MonoBehaviour
         }
     }
 
-    void OnBecameVisible()
+    // void OnBecameVisible()
+    // {
+    //     visible = true;
+    //     time = Time.deltaTime;
+    // }
+    void OnWillRenderObject()
     {
-        visible = true;
-        time = Time.deltaTime;
+        //Debug.Log("name=" + Camera.current.name);
+        if (Camera.current.name == "AR Camera" && TestHitCb(transform.position))
+        {
+            if (!visible)
+            {
+                visible = true;
+                time = Time.deltaTime;
+                Debug.Log(Text);
+            }
+        }
     }
 }

@@ -8,6 +8,9 @@ public class SphereManager : MonoBehaviour
     public GameObject prefab;
 
     [SerializeField]
+    public GameObject cube;
+
+    [SerializeField]
     public UnityEngine.UI.Text UIText;
 
     private int num = 0;
@@ -32,6 +35,19 @@ public class SphereManager : MonoBehaviour
             updateInfo();
         };
         num++;
+        ctrl.TestHitCb += (Vector3 position) =>
+        {
+            var minx = cube.transform.position.x - cube.transform.localScale.x / 2;
+            var miny = cube.transform.position.y - cube.transform.localScale.y / 2;
+            var minz = cube.transform.position.z - cube.transform.localScale.z / 2;
+            var maxx = cube.transform.position.x + cube.transform.localScale.x / 2;
+            var maxy = cube.transform.position.y + cube.transform.localScale.y / 2;
+            var maxz = cube.transform.position.z + cube.transform.localScale.z / 2;
+            return (minx <= position.x && position.x <= maxx &&
+                miny <= position.y && position.y <= maxy &&
+                minz <= position.z && position.z <= maxz);
+        };
+        ctrl.Text = string.Format("{0}", num);
         updateInfo();
     }
 
